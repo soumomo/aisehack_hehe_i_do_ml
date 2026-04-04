@@ -40,12 +40,23 @@ Our pipeline handles this using probability thresholds. We extract raw softmax p
 
 ## Setup and Execution
 
-To reproduce the submission:
+Due to Kaggle kernel caching with specific `tifffile` dependencies, there are two ways to reproduce this submission:
 
-1. Import the notebook `aise-phase2_1927.ipynb` into a Kaggle environment equipped with GPU hardware limit (e.g., Tesla T4).
-2. Attach the competition dataset. Ensure the data directories (`image/`, `label/`, `split/`) are mapped to the configuration block at the top of the notebook.
-3. Execute all cells.
-4. The notebook will write `submission.csv` containing the required Run-Length Encoded (RLE) output format for the phase 2 evaluation.
+### Option A: Automated "Commit & Run" (Recommended)
+If you wish to execute the notebook as a background Kaggle process:
+1. Open the Kaggle Notebook Editor.
+2. Navigate to **Add-ons -> Dependency Manager**.
+3. Add the following line: `pip install -U imagecodecs` and click Save.
+4. **Comment out** the very first cell in the notebook (`!pip install -U imagecodecs`).
+5. Click **Save Version -> Save & Run All (Commit)**. The notebook will execute without kernel disruption and generate the `submission.csv`.
+
+### Option B: Interactive Cell-by-Cell
+If you are running the notebook interactively in a Kaggle session:
+1. Run the very first cell: `!pip install -U imagecodecs`.
+2. Navigate to the top menu and click **Run -> Restart Kernel and Clear Outputs**. (This step is mandatory to force Python to reload the newly installed codecs).
+3. Do **not** run the first install cell again.
+4. Run all subsequent cells one by one (or **Run -> Run All** starting from the imported modules cell).
+5. The notebook will process the predictions and write the `submission.csv`.
 
 *(Note: Ensure Kaggle Environment settings have internet access turned on if supplementary downloads are triggered.)*
 
